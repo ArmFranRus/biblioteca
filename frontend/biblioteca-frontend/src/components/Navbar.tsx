@@ -7,9 +7,6 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
-    isActive ? 'navlink navlink--active' : 'navlink';
-
   return (
     <header className="nav">
       <div>
@@ -20,9 +17,9 @@ export default function Navbar() {
 
         <nav >
           <NavLink to="/catalogo" className={"navlink"}>Catalogo</NavLink>
-          {email && <NavLink to="/miei-prestiti" className={linkClass}>I miei prestiti</NavLink>}
-          {ruolo === 'STAFF' && <NavLink to="/prestiti" className={linkClass}>Prestiti</NavLink>}
-          {ruolo === 'STAFF' && <NavLink to="/staff" className={linkClass}>Gestione</NavLink>}
+          {email && <NavLink to="/miei-prestiti" className={"navlink"}>I miei prestiti</NavLink>}
+          {ruolo === 'STAFF' && <NavLink to="/prestiti" className={"navlink"}>Prestiti</NavLink>}
+          {ruolo === 'STAFF' && <NavLink to="/staff" className={"navlink"}>Gestione</NavLink>}
         </nav>
 
         <div>

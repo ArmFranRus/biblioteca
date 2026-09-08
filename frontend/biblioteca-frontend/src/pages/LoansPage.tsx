@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useGetLoansQuery, useReturnLoanMutation } from '../api';
-import type { Prestito, StatoPrestito } from '../types';
+import type { StatoPrestito } from '../types';
+import formatData from '../utils/formatData';
+import StatoBadgePrestito from '../utils/StatoBadgePrestito';
 
 const FILTRI: { value: '' | StatoPrestito; label: string }[] = [
   { value: '', label: 'Tutti' },
@@ -8,18 +10,6 @@ const FILTRI: { value: '' | StatoPrestito; label: string }[] = [
   { value: 'IN_RITARDO', label: 'In ritardo' },
   { value: 'RESTITUITO', label: 'Restituiti' },
 ];
-
-function formatData(iso: string | null): string {
-  if (!iso) return '-';
-  const d = new Date(iso);
-  return isNaN(d.getTime()) ? iso : d.toLocaleDateString('it-IT');
-}
-
-function StatoBadge({ prestito }: { prestito: Prestito }) {
-  if (prestito.stato === 'RESTITUITO') return <span className="badge text-bg-secondary">Restituito</span>;
-  if (prestito.inRitardo) return <span className="badge text-bg-danger">In ritardo - {prestito.giorniRitardo}g</span>;
-  return <span className="badge text-bg-success">Attivo</span>;
-}
 
 export default function LoansPage() {
   const [stato, setStato] = useState<'' | StatoPrestito>('');
@@ -56,7 +46,7 @@ export default function LoansPage() {
                   <td>{p.utenteNome || p.utenteEmail}<span className="d-block text-muted small">{p.utenteEmail}</span></td>
                   <td>{formatData(p.dataPrestito)}</td>
                   <td>{formatData(p.dataScadenza)}</td>
-                  <td><StatoBadge prestito={p} /></td>
+                  <td><StatoBadgePrestito prestito={p} /></td>
                   <td className="text-end">
                     {p.dataRestituzione === null && (
                       <button className="btn btn-success btn-sm" disabled={restituendo}

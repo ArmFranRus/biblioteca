@@ -1,21 +1,6 @@
 import { useGetMyReservationsQuery, useCancelReservationMutation } from '../api';
-import type { Prenotazione } from '../types';
-
-function formatData(iso: string | null): string {
-  if (!iso) return '-';
-  const d = new Date(iso);
-  return isNaN(d.getTime()) ? iso : d.toLocaleDateString('it-IT');
-}
-
-function StatoBadge({ p }: { p: Prenotazione }) {
-  switch (p.stato) {
-    case 'IN_ATTESA': return <span className="badge text-bg-success">In coda</span>;
-    case 'PRONTA': return <span className="badge text-bg-primary">Pronta al ritiro</span>;
-    case 'EVASA': return <span className="badge text-bg-secondary">Evasa</span>;
-    case 'ANNULLATA': return <span className="badge text-bg-secondary">Annullata</span>;
-    case 'SCADUTA': return <span className="badge text-bg-danger">Scaduta</span>;
-  }
-}
+import formatData from '../utils/formatData';
+import StatoBadgePrenotazione from '../utils/StatoBadgePrenotazione';
 
 export default function MyReservationsPage() {
   const { data: prenotazioni, isLoading, isError } = useGetMyReservationsQuery();
@@ -43,8 +28,8 @@ export default function MyReservationsPage() {
                 <tr key={p.id}>
                   <td>{p.titoloLibro}</td>
                   <td>{formatData(p.data)}</td>
-                  <td>{p.stato === 'PRONTA' ? formatData(p.scadenzaRitiro) : '—'}</td>
-                  <td><StatoBadge p={p} /></td>
+                  <td>{p.stato === 'PRONTA' ? formatData(p.scadenzaRitiro) : '-'}</td>
+                  <td><StatoBadgePrenotazione p={p} /></td>
                   <td className="text-end">
                     {(p.stato === 'IN_ATTESA' || p.stato === 'PRONTA') && (
                       <button className="btn btn-outline-danger btn-sm" disabled={annullando} onClick={() => cancel(p.id)}>

@@ -1,17 +1,6 @@
 import { useGetMyLoansQuery } from '../api';
-import type { Prestito } from '../types';
-
-function formatData(iso: string | null): string {
-  if (!iso) return '-';
-  const d = new Date(iso);
-  return isNaN(d.getTime()) ? iso : d.toLocaleDateString('it-IT');
-}
-
-function StatoBadge({ prestito }: { prestito: Prestito }) {
-  if (prestito.stato === 'RESTITUITO') return <span className="badge text-bg-secondary">Restituito</span>;
-  if (prestito.inRitardo) return <span className="badge text-bg-danger">In ritardo - {prestito.giorniRitardo}g</span>;
-  return <span className="badge text-bg-success">In corso</span>;
-}
+import formatData from '../utils/formatData';
+import StatoBadgePrestito from '../utils/StatoBadgePrestito';
 
 export default function MyLoansPage() {
   const { data: prestiti, isLoading, isError } = useGetMyLoansQuery();
@@ -40,7 +29,7 @@ export default function MyLoansPage() {
                   <td>{formatData(p.dataPrestito)}</td>
                   <td>{formatData(p.dataScadenza)}</td>
                   <td>{formatData(p.dataRestituzione)}</td>
-                  <td><StatoBadge prestito={p} /></td>
+                  <td><StatoBadgePrestito prestito={p} /></td>
                 </tr>
               ))}
             </tbody>

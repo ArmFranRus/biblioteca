@@ -1,17 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetBooksQuery, useGetCategoriesQuery } from '../api';
-
-function Stars({ voto }: { voto: number }) {
-  const pieni = Math.max(0, Math.min(5, Math.round(voto)));
-  return (
-    <span className="text-warning" aria-label={`${voto} su 5`}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <i key={i} className={`bi ${i < pieni ? 'bi-star-fill' : 'bi-star'}`} />
-      ))}
-    </span>
-  );
-}
+import Stars from '../utils/Stars';
 
 export default function BooksPage() {
   const [titolo, setTitolo] = useState('');

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useGetReservationsQuery } from '../api';
-import type { Prenotazione, StatoPrenotazione } from '../types';
+import type { StatoPrenotazione } from '../types';
+import formatData from '../utils/formatData';
+import StatoBadgePrenotazione from '../utils/StatoBadgePrenotazione';
 
 const FILTRI: { value: '' | StatoPrenotazione; label: string }[] = [
   { value: '', label: 'Tutte' },
@@ -10,22 +12,6 @@ const FILTRI: { value: '' | StatoPrenotazione; label: string }[] = [
   { value: 'SCADUTA', label: 'Scadute' },
   { value: 'ANNULLATA', label: 'Annullate' },
 ];
-
-function formatData(iso: string | null): string {
-  if (!iso) return '-';
-  const d = new Date(iso);
-  return isNaN(d.getTime()) ? iso : d.toLocaleDateString('it-IT');
-}
-
-function StatoBadge({ p }: { p: Prenotazione }) {
-  switch (p.stato) {
-    case 'IN_ATTESA': return <span className="badge text-bg-success">In attesa</span>;
-    case 'PRONTA': return <span className="badge text-bg-primary">Pronta</span>;
-    case 'EVASA': return <span className="badge text-bg-secondary">Evasa</span>;
-    case 'ANNULLATA': return <span className="badge text-bg-secondary">Annullata</span>;
-    case 'SCADUTA': return <span className="badge text-bg-danger">Scaduta</span>;
-  }
-}
 
 export default function ReservationsPage() {
   const [stato, setStato] = useState<'' | StatoPrenotazione>('');
@@ -61,7 +47,7 @@ export default function ReservationsPage() {
                   <td>{p.utenteNome || p.utenteEmail}<span className="d-block text-muted small">{p.utenteEmail}</span></td>
                   <td>{formatData(p.data)}</td>
                   <td>{p.stato === 'PRONTA' ? formatData(p.scadenzaRitiro) : '-'}</td>
-                  <td><StatoBadge p={p} /></td>
+                  <td><StatoBadgePrenotazione p={p} /></td>
                 </tr>
               ))}
             </tbody>

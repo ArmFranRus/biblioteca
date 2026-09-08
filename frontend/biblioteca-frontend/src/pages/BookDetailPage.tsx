@@ -18,6 +18,8 @@ import {
 } from '../api';
 import { useAppSelector } from '../hooks';
 import type { StatoCopia, Utente } from '../types';
+import formatData from '../utils/formatData';
+import Stars from '../utils/Stars';
 
 const STATI_MODIFICABILI: StatoCopia[] = ['DISPONIBILE', 'SMARRITA', 'DANNEGGIATA'];
 
@@ -34,22 +36,6 @@ const BADGE_STATO: Record<StatoCopia, string> = {
   SMARRITA: 'text-bg-danger',
   DANNEGGIATA: 'text-bg-danger',
 };
-
-function Stars({ voto }: { voto: number }) {
-  const pieni = Math.max(0, Math.min(5, Math.round(voto)));
-  return (
-    <span className="text-warning" aria-label={`${voto} su 5`}>
-      {Array.from({ length: 5 }, (_, i) => (
-        <i key={i} className={`bi ${i < pieni ? 'bi-star-fill' : 'bi-star'}`} />
-      ))}
-    </span>
-  );
-}
-
-function formatData(iso: string): string {
-  const d = new Date(iso);
-  return isNaN(d.getTime()) ? iso : d.toLocaleDateString('it-IT');
-}
 
 export default function BookDetailPage() {
   const { id } = useParams();
