@@ -38,6 +38,7 @@ export default function Header() {
             {isStaff && <li className="nav-item"><NavLink to="/prestiti" className={linkClass}>Prestiti</NavLink></li>}
             {isStaff && <li className="nav-item"><NavLink to="/prenotazioni" className={linkClass}>Prenotazioni</NavLink></li>}
             {isStaff && <li className="nav-item"><NavLink to="/dashboard" className={linkClass}>Dashboard</NavLink></li>}
+            {isStaff && <li className="nav-item"><NavLink to="/utenti" className={linkClass}>Utenti</NavLink></li>}
             {isStaff && <li className="nav-item"><NavLink to="/staff" className={linkClass}>Gestione</NavLink></li>}
           </ul>
 

@@ -22,12 +22,14 @@ import MyReservationsPage from './pages/MyReservationsPage';
 import DashboardPage from './pages/DashboardPage';
 import RequireAuth from './components/RequireAuth';
 import RequireStaff from './components/RequireStaff';
+import UsersPage from './pages/UsersPage';
 
 const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       { index: true, element: <Navigate to="/catalogo" replace /> },
+      { path: 'utenti', element: <RequireStaff><UsersPage /></RequireStaff> },
       { path: 'catalogo', element: <BooksPage /> },
       { path: 'catalogo/:id', element: <BookDetailPage /> },
       { path: 'login', element: <LoginPage /> },
