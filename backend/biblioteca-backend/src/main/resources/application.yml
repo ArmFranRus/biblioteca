@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: biblioteca-backend
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3307}/${DB_NAME:biblioteca}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 7979
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:chiave-segreta-molto-lunga-e-casuale-0123456789}
+    expiration-ms: 86400000
+  admin:
+    email: ${ADMIN_EMAIL:admin@biblioteca.it}
+    password: ${ADMIN_PASSWORD:admin1234}
+  loan:
+    max-active-per-user: ${LOAN_MAX_ACTIVE:5}
+  reservation:
+    pickup-days: ${RESERVATION_PICKUP_DAYS:3}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
