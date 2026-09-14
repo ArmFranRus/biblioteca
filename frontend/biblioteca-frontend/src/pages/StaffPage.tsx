@@ -167,7 +167,7 @@ function NuovoLibroPanel() {
             </div>
             <div className="col-md-4">
               <label className="form-label">ISBN</label>
-              <input className="form-control" value={isbn} onChange={(e) => setIsbn(e.target.value)} />
+              <input className="form-control" value={isbn} onChange={(e) => setIsbn(e.target.value)} required />
             </div>
             <div className="col-md-5">
               <label className="form-label">Editore</label>
@@ -181,7 +181,7 @@ function NuovoLibroPanel() {
               <label className="form-label">Categoria</label>
               <select className="form-select" value={categoriaId}
                 onChange={(e) => setCategoriaId(e.target.value === '' ? '' : Number(e.target.value))}>
-                <option value="">—</option>
+                <option value="">-</option>
                 {categorie?.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
               </select>
             </div>

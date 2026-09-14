@@ -37,7 +37,7 @@ export default function BooksPage() {
         </div>
       </div>
 
-      {isLoading && <p className="text-muted">Caricamento…</p>}
+      {isLoading && <p className="text-muted">Caricamento...</p>}
       {isError && <div className="alert alert-danger">Impossibile caricare il catalogo. Verifica che il server sia attivo.</div>}
       {libri && libri.length === 0 && (
         <div className="alert alert-light border text-center text-muted">
